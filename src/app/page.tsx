@@ -26,15 +26,6 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [projectImages.length]);
 
-  // Cerrar menú al cambiar de tamaño (preventivo)
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) setIsMenuOpen(false);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const services = [
     {
       title: "Desarrollo Web",
@@ -56,14 +47,14 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 scroll-smooth">
       
-      {/* 1. CABECERA (HEADER) MEJORADA PARA MÓVIL */}
-      <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
-        <div className="flex items-center justify-between px-6 md:px-8 py-4 max-w-7xl mx-auto">
-          <Link href="/" className="flex items-center gap-3 z-[110]">
-            <Image src="/logo.png" alt="Nodal.io" width={35} height={35} className="rounded-lg" />
+      {/* 1. CABECERA (HEADER) */}
+      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
+        <div className="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+            <Image src="/logo.png" alt="Nodal.io" width={40} height={40} className="rounded-lg" />
             <div className="flex flex-col">
-              <span className="text-lg md:text-xl font-black tracking-tighter leading-none">NODAL<span className="text-blue-500">.IO</span></span>
-              <span className="text-[8px] uppercase tracking-[0.2em] text-blue-400 font-bold">Solutions</span>
+              <span className="text-xl font-black tracking-tighter leading-none">NODAL<span className="text-blue-500">.IO</span></span>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-blue-400 font-bold">Solutions</span>
             </div>
           </Link>
 
@@ -75,73 +66,83 @@ export default function Home() {
             <Link href="/sobre-mi" className="hover:text-blue-400 transition-colors">Sobre Mi</Link>
           </div>
 
-          <div className="flex items-center gap-4 z-[110]">
-            <Link href="/contacto" className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all">
+          <div className="flex items-center gap-4">
+            <Link href="/contacto" className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all text-center">
               CONTACTO
             </Link>
 
-            {/* Botón Hamburguesa Estilizado */}
+            {/* Botón Hamburguesa (Solo Móvil) */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex flex-col gap-1.5 p-2 transition-all"
+              className="md:hidden flex flex-col gap-1.5 z-50 p-2"
             >
-              <span className={`h-0.5 w-6 bg-white transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-              <span className={`h-0.5 w-6 bg-white transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`h-0.5 w-6 bg-white transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
             </button>
           </div>
         </div>
 
-        {/* MENÚ MÓVIL OVERLAY (Solución a tus capturas) */}
-        <div className={`fixed inset-0 bg-slate-950/98 backdrop-blur-2xl z-[105] flex flex-col items-center justify-center transition-all duration-500 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-          <div className="flex flex-col items-center gap-10 text-center">
-            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-4xl font-black tracking-tighter hover:text-blue-500 transition-colors">INICIO</a>
-            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-4xl font-black tracking-tighter hover:text-blue-500 transition-colors">SERVICIOS</a>
-            <a href="#proyectos" onClick={() => setIsMenuOpen(false)} className="text-4xl font-black tracking-tighter hover:text-blue-500 transition-colors">PROYECTOS</a>
-            <Link href="/sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-4xl font-black tracking-tighter hover:text-blue-500 transition-colors">SOBRE MI</Link>
-            <Link href="/contacto" onClick={() => setIsMenuOpen(false)} className="mt-6 bg-blue-600 text-white px-12 py-5 rounded-2xl text-sm font-black tracking-widest uppercase shadow-2xl shadow-blue-900/40">
-              CONTACTO
-            </Link>
+        {/* MENÚ MÓVIL (Overlay) */}
+        <div className={`fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-40 transition-transform duration-500 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden`}>
+          <div className="flex flex-col items-center justify-center h-full gap-8 text-sm font-black uppercase tracking-[0.3em]">
+            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Inicio</a>
+            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Servicios</a>
+            <a href="#proyectos" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Proyectos</a>
+            <Link href="/sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Sobre Mi</Link>
+            <Link href="/contacto" onClick={() => setIsMenuOpen(false)} className="mt-4 bg-blue-600 px-10 py-4 rounded-2xl text-base">Contacto</Link>
           </div>
         </div>
       </nav>
 
       {/* 2. HERO IMPACTANTE */}
-      <section id="inicio" className="relative pt-40 pb-20 overflow-hidden px-6">
+      <section id="inicio" className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-blue-600/10 blur-[120px] rounded-full"></div>
           <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <div className="relative inline-block mb-12 group">
+        <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
+          <div className="relative inline-block mb-12 group w-full max-w-[500px] aspect-video">
             <div className="absolute -inset-10 bg-blue-500 rounded-full blur-[100px] opacity-20 group-hover:opacity-30 transition duration-1000"></div>
             <Image 
               src="/logo.png" 
               alt="Logo Nodalio" 
-              width={220} 
-              height={220} 
-              className="relative drop-shadow-[0_0_50px_rgba(59,130,246,0.6)] transition-transform duration-700 group-hover:scale-105 mx-auto"
+              fill
+              className="relative object-contain drop-shadow-[0_0_50px_rgba(59,130,246,0.6)] transition-transform duration-700 group-hover:scale-105"
               priority
             />
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-9xl font-black tracking-tighter mb-6 leading-none">
+            <h1 className="text-6xl md:text-9xl font-black tracking-tighter mb-6 leading-[0.85]">
               NODAL<span className="text-blue-500">.IO</span>
             </h1>
             
-            <p className="text-xl md:text-3xl text-slate-300 max-w-2xl mx-auto mb-10 font-extralight leading-relaxed tracking-tight">
+            <p className="text-2xl md:text-3xl text-slate-300 max-w-2xl mx-auto mb-10 font-extralight leading-relaxed tracking-tight">
               Arquitectura digital de <span className="text-white font-medium italic">alto impacto</span>.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-              <a href="#proyectos" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 rounded-2xl font-black transition-all shadow-2xl shadow-blue-900/40 uppercase tracking-widest text-sm">
+              <a href="#proyectos" className="bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 rounded-2xl font-black transition-all shadow-2xl shadow-blue-900/40 uppercase tracking-widest text-sm">
                 Explorar Proyectos
               </a>
               <div className="flex items-center gap-3 px-8 py-5 rounded-2xl border border-slate-800 bg-slate-900/50 text-slate-300 font-bold uppercase tracking-widest text-xs">
                 <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                Infraestructura Segura
+                <span className="uppercase tracking-widest">Infraestructura Segura</span>
+              </div>
+            </div>
+
+            {/* STACK TECNOLÓGICO */}
+            <div className="pt-8 border-t border-white/5">
+              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Especialista en tecnología moderna</p>
+              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 opacity-40 hover:opacity-100 transition-opacity duration-500">
+                <span className="text-[11px] md:text-xs font-black tracking-tighter">TYPESCRIPT</span>
+                <span className="text-[11px] md:text-xs font-black tracking-tighter">NEXT.JS</span>
+                <span className="text-[11px] md:text-xs font-black tracking-tighter text-blue-400">SUPABASE</span>
+                <span className="text-[11px] md:text-xs font-black tracking-tighter">TAILWIND CSS</span>
+                <span className="text-[11px] md:text-xs font-black tracking-tighter text-green-500">GOOGLE WORKSPACE</span>
+                <span className="text-[11px] md:text-xs font-black tracking-tighter">VERCEL</span>
               </div>
             </div>
           </div>
@@ -167,18 +168,18 @@ export default function Home() {
       <section id="proyectos" className="px-8 py-32 max-w-7xl mx-auto">
         <div className="relative overflow-hidden rounded-[3rem] border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
           <div className="grid md:grid-cols-2 gap-0 items-center">
-            <div className="p-10 md:p-20 z-10 relative">
+            <div className="p-12 md:p-20 z-10 relative">
               <span className="text-blue-500 font-bold tracking-[0.3em] text-xs uppercase">Proyecto Destacado</span>
-              <h3 className="text-4xl md:text-5xl font-black mt-6 mb-8">Nutrifit Pro</h3>
-              <p className="text-lg md:text-xl text-slate-400 mb-12 font-light leading-relaxed">
-                Plataforma integral de gestión nutricional desarrollada con arquitectura basada en Supabase y Next.js.
+              <h3 className="text-5xl font-black mt-6 mb-8">Nutrifit Pro</h3>
+              <p className="text-xl text-slate-400 mb-12 font-light leading-relaxed">
+                Plataforma integral de gestión nutricional. Desarrollo centrado en la escalabilidad y el rendimiento con arquitectura basada en Supabase y Next.js.
               </p>
               <Link href="https://www.nutrifit-pro.es" target="_blank" className="text-white font-bold text-lg border-b-2 border-blue-600 pb-2 hover:text-blue-400 transition-colors">
                 VISITAR PLATAFORMA →
               </Link>
             </div>
             
-            <div className="h-[300px] md:h-full bg-black/20 flex items-center justify-center border-l border-white/5 relative overflow-hidden">
+            <div className="h-full min-h-[450px] bg-black/20 flex items-center justify-center border-l border-white/5 relative overflow-hidden">
               {projectImages.map((img, index) => (
                 <div
                   key={index}
@@ -190,13 +191,19 @@ export default function Home() {
                     src={img} 
                     alt={`Captura Nutrifit ${index + 1}`} 
                     fill 
-                    className="object-cover object-top opacity-80"
+                    className="object-cover object-top opacity-80" 
                   />
                 </div>
               ))}
+              
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
                 {projectImages.map((_, i) => (
-                  <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === currentImg ? "bg-blue-500 w-8" : "bg-white/20 w-2"}`}></div>
+                  <div 
+                    key={i} 
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      i === currentImg ? "bg-blue-500 w-8" : "bg-white/20 w-2"
+                    }`}
+                  ></div>
                 ))}
               </div>
             </div>
