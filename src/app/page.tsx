@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
+  // Estado para el menú móvil
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   // Estado para el carrusel de imágenes de Nutrifit
   const [currentImg, setCurrentImg] = useState(0);
   
@@ -47,26 +50,52 @@ export default function Home() {
       {/* 1. CABECERA (HEADER) */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
         <div className="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 group cursor-pointer">
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
             <Image src="/logo.png" alt="Nodal.io" width={40} height={40} className="rounded-lg" />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-tighter leading-none">NODAL<span className="text-blue-500">.IO</span></span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-blue-400 font-bold">Solutions</span>
             </div>
-          </div>
+          </Link>
+
+          {/* Menú Desktop */}
           <div className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
             <a href="#inicio" className="hover:text-blue-400 transition-colors">Inicio</a>
             <a href="#servicios" className="hover:text-blue-400 transition-colors">Servicios</a>
             <a href="#proyectos" className="hover:text-blue-400 transition-colors">Proyectos</a>
-            {/* ACCESO A SOBRE MI AÑADIDO ABAJO */}
             <Link href="/sobre-mi" className="hover:text-blue-400 transition-colors">Sobre Mi</Link>
           </div>
-          <Link href="/contacto" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all text-center">
-            CONTACTO
-           </Link>
+
+          <div className="flex items-center gap-4">
+            <Link href="/contacto" className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all text-center">
+              CONTACTO
+            </Link>
+
+            {/* Botón Hamburguesa (Solo Móvil) */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden flex flex-col gap-1.5 z-50 p-2"
+            >
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </button>
+          </div>
+        </div>
+
+        {/* MENÚ MÓVIL (Overlay) */}
+        <div className={`fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-40 transition-transform duration-500 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden`}>
+          <div className="flex flex-col items-center justify-center h-full gap-8 text-sm font-black uppercase tracking-[0.3em]">
+            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Inicio</a>
+            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Servicios</a>
+            <a href="#proyectos" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Proyectos</a>
+            <Link href="/sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-2xl hover:text-blue-500 transition-colors">Sobre Mi</Link>
+            <Link href="/contacto" onClick={() => setIsMenuOpen(false)} className="mt-4 bg-blue-600 px-10 py-4 rounded-2xl text-base">Contacto</Link>
+          </div>
         </div>
       </nav>
 
+      {/* Resto del código (Hero, Servicios, Proyectos, Footer) se mantiene igual */}
       {/* 2. HERO IMPACTANTE */}
       <section id="inicio" className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -137,7 +166,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. PROYECTO DESTACADO CON CARRUSEL LIMPIO */}
+      {/* 4. PROYECTO DESTACADO */}
       <section id="proyectos" className="px-8 py-32 max-w-7xl mx-auto">
         <div className="relative overflow-hidden rounded-[3rem] border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
           <div className="grid md:grid-cols-2 gap-0 items-center">
@@ -152,7 +181,6 @@ export default function Home() {
               </Link>
             </div>
             
-            {/* ÁREA DEL CARRUSEL MEJORADA */}
             <div className="h-full min-h-[450px] bg-black/20 flex items-center justify-center border-l border-white/5 relative overflow-hidden">
               {projectImages.map((img, index) => (
                 <div
@@ -165,12 +193,11 @@ export default function Home() {
                     src={img} 
                     alt={`Captura Nutrifit ${index + 1}`} 
                     fill 
-                    className="object-cover object-top opacity-80" // Opacidad alta para resaltar las imágenes
+                    className="object-cover object-top opacity-80" 
                   />
                 </div>
               ))}
               
-              {/* Indicadores de posición (Dots) */}
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
                 {projectImages.map((_, i) => (
                   <div 
