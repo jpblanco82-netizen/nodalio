@@ -103,7 +103,8 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
-          <div className="relative inline-block mb-12 group w-full max-w-[500px] aspect-video">
+          {/* AJUSTE RESPONSIVE: w-full y max-w-[450px] para evitar amontonamiento en móviles */}
+          <div className="relative inline-block mb-12 group w-full max-w-[450px] aspect-[16/9] mx-auto">
             <div className="absolute -inset-10 bg-blue-500 rounded-full blur-[100px] opacity-20 group-hover:opacity-30 transition duration-1000"></div>
             <Image 
               src="/logo.png" 
