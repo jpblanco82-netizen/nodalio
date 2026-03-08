@@ -2,11 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Contacto() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -37,45 +38,74 @@ export default function Contacto() {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 flex flex-col scroll-smooth">
       
-      {/* 1. CABECERA (Sincronizada con el Maestro) */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
-        <div className="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
-          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+      {/* 1. CABECERA (Header con Menú Descendente Transparente) */}
+      <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
+        <div className="flex items-center justify-between px-6 md:px-8 py-4 max-w-7xl mx-auto relative">
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer z-[110]">
             <Image src="/logo.png" alt="Nodal.io" width={40} height={40} className="rounded-lg" />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-tighter leading-none">NODAL<span className="text-blue-500">.IO</span></span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-blue-400 font-bold">Solutions</span>
             </div>
           </Link>
+
+          {/* Menú Desktop */}
           <div className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
             <Link href="/#inicio" className="hover:text-blue-400 transition-colors">Inicio</Link>
             <Link href="/#servicios" className="hover:text-blue-400 transition-colors">Servicios</Link>
             <Link href="/#proyectos" className="hover:text-blue-400 transition-colors">Proyectos</Link>
             <Link href="/sobre-mi" className="hover:text-blue-400 transition-colors">Sobre Mi</Link>
           </div>
-          <div className="bg-blue-600/20 text-blue-400 px-6 py-2 rounded-full text-xs font-black tracking-widest border border-blue-500/30">
-            CONTACTO
+
+          <div className="flex items-center gap-4 z-[110]">
+            <div className="hidden sm:block bg-blue-600/20 text-blue-400 px-6 py-2 rounded-full text-xs font-black tracking-widest border border-blue-500/30">
+              CONTACTO
+            </div>
+
+            {/* Botón Hamburguesa */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none"
+              aria-label="Toggle Menu"
+            >
+              <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </button>
+          </div>
+        </div>
+
+        {/* MENÚ MÓVIL: TARJETA TRANSPARENTE QUE BAJA DESDE EL TOP */}
+        <div className={`absolute top-full left-0 w-full p-4 transition-all duration-500 ease-in-out z-[105] md:hidden ${isMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-10 opacity-0 invisible'}`}>
+          <div className="bg-slate-900/90 border border-white/10 rounded-[2rem] p-8 shadow-2xl backdrop-blur-2xl">
+            <div className="flex flex-col items-center gap-6 text-center">
+              <Link href="/#inicio" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-blue-500 transition-colors">Inicio</Link>
+              <Link href="/#servicios" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-blue-500 transition-colors">Servicios</Link>
+              <Link href="/#proyectos" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-blue-500 transition-colors">Proyectos</Link>
+              <Link href="/sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-blue-500 transition-colors">Sobre Mi</Link>
+              <div className="mt-4 bg-blue-600/20 text-blue-400 border border-blue-500/30 px-10 py-3 rounded-full text-[10px] font-black tracking-widest uppercase text-center w-full">CONTACTO</div>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* 2. FORMULARIO (Con campo de teléfono añadido) */}
+      {/* 2. FORMULARIO */}
       <main className="flex-grow flex items-center justify-center px-8 pt-40 pb-20 relative overflow-hidden">
-        {/* Efecto de luz de fondo para coherencia visual */}
+        {/* Efecto de luz de fondo */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-blue-600/10 blur-[120px] rounded-full"></div>
         </div>
 
         <div className="max-w-xl w-full relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-6xl md:text-7xl font-black tracking-tighter mb-4">¿Hablamos?</h1>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 uppercase">¿Hablamos?</h1>
             <p className="text-slate-400 font-light text-lg">
               Cuéntame tu idea y buscaremos la mejor arquitectura para hacerla realidad.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500 ml-4">Nombre</label>
                 <input 
@@ -88,7 +118,6 @@ export default function Contacto() {
                 />
               </div>
 
-              {/* NUEVO CAMPO: TELÉFONO */}
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500 ml-4">Teléfono</label>
                 <input 
@@ -142,13 +171,13 @@ export default function Contacto() {
         </div>
       </main>
 
-      {/* 3. PIE DE PÁGINA (Sincronizado con el Maestro) */}
+      {/* 3. PIE DE PÁGINA */}
       <footer className="py-20 text-center border-t border-white/5 bg-slate-950">
         <div className="flex items-center justify-center gap-3 mb-8 opacity-20">
           <Image src="/logo.png" alt="mini" width={25} height={25} />
           <span className="font-black tracking-tighter uppercase">NODAL.IO</span>
         </div>
-        <p className="text-slate-600 text-[10px] font-bold tracking-[0.5em] uppercase">
+        <p className="text-slate-600 text-[10px] font-bold tracking-[0.5em] uppercase px-6 text-center">
           © 2026 Nodal.io • Software Architecture
         </p>
       </footer>
