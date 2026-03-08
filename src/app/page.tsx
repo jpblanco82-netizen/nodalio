@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 scroll-smooth flex flex-col">
       
-      {/* 1. CABECERA (HEADER) - CORRECCIÓN DE CAPAS Y AMONTONAMIENTO */}
+      {/* 1. CABECERA (HEADER) - PROTECCIÓN DE CAPAS */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-slate-950/90 backdrop-blur-md">
         <div className="flex items-center justify-between px-6 md:px-8 py-4 max-w-7xl mx-auto relative">
           <Link href="/" className="flex items-center gap-3 group cursor-pointer z-[110]">
@@ -96,7 +96,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* 2. HERO IMPACTANTE - ESPACIADO PROTEGIDO */}
+      {/* 2. HERO IMPACTANTE - RELLENO PROTEGIDO PARA MÓVIL */}
       <section id="inicio" className="relative pt-40 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-blue-600/10 blur-[120px] rounded-full"></div>
@@ -104,7 +104,6 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
-          {/* Logo Rectangular corregido */}
           <div className="relative inline-block mb-12 group w-full max-w-[400px] aspect-video mx-auto">
             <div className="absolute -inset-10 bg-blue-500 rounded-full blur-[100px] opacity-20 group-hover:opacity-30 transition duration-1000"></div>
             <Image 
@@ -173,7 +172,7 @@ export default function Home() {
             <div className="p-10 md:p-20 z-10 relative text-center md:text-left order-2 md:order-1">
               <span className="text-blue-500 font-bold tracking-widest text-xs uppercase">Proyecto Destacado</span>
               <h3 className="text-4xl md:text-5xl font-black mt-6 mb-8 uppercase tracking-tighter">Nutrifit Pro</h3>
-              <p className="text-lg md:text-xl text-slate-400 mb-12 font-light leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-400 mb-12 font-light leading-relaxed text-left">
                 Plataforma integral de gestión nutricional desarrollada con arquitectura basada en Supabase y Next.js.
               </p>
               <Link href="https://www.nutrifit-pro.es" target="_blank" className="text-white font-bold text-lg border-b-2 border-blue-600 pb-2 hover:text-blue-400 transition-colors inline-block">
