@@ -58,9 +58,11 @@ export default function Home() {
             <a href="#inicio" className="hover:text-blue-400 transition-colors">Inicio</a>
             <a href="#servicios" className="hover:text-blue-400 transition-colors">Servicios</a>
             <a href="#proyectos" className="hover:text-blue-400 transition-colors">Proyectos</a>
+            {/* ACCESO A SOBRE MI AÑADIDO ABAJO */}
+            <Link href="/sobre-mi" className="hover:text-blue-400 transition-colors">Sobre Mi</Link>
           </div>
           <Link href="/contacto" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all text-center">
-           CONTACTO
+            CONTACTO
            </Link>
         </div>
       </nav>
@@ -100,7 +102,7 @@ export default function Home() {
               </a>
               <div className="flex items-center gap-3 px-8 py-5 rounded-2xl border border-slate-800 bg-slate-900/50 text-slate-300 font-bold uppercase tracking-widest text-xs">
                 <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                Infraestructura Segura
+                <span className="uppercase tracking-widest">Infraestructura Segura</span>
               </div>
             </div>
 
