@@ -79,7 +79,7 @@ export default function SobreMiPage() {
 
               <div className="p-8 rounded-[2rem] bg-slate-900/50 border border-slate-800 backdrop-blur-sm text-left">
                 <p className="text-slate-300">
-                  <span className="text-blue-500 font-black tracking-widest text-xs uppercase block mb-2">Proyecto Nodalio</span>
+                  <span className="text-blue-500 font-black tracking-widest text-xs uppercase block mb-2">Proyecto Nodal.io</span>
                   Es el reflejo de esta filosofía: un proyecto nacido del entusiasmo por aprender y del compromiso con la calidad técnica. Aquí encontrarás la evolución de alguien que disfruta transformando retos en realidades digitales.
                 </p>
               </div>
